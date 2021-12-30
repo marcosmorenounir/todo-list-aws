@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # todo-list-aws
 
 Este proyecto contiene un ejemplo de solución **SAM + Jenkins**. Contiene una aplicación API RESTful de libreta de tareas pendientes (ToDo) y los pipelines que permiten definir el CI/CD para productivizarla.
@@ -147,4 +146,3 @@ aws cloudformation delete-stack --stack-name todo-list-aws-production
 
 =======
 # todo-list-aws
->>>>>>> 60ffaccdb0a7c32154f11b4524445deef4c7cbb3
