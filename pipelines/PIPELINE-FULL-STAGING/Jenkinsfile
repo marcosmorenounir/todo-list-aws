@@ -5,9 +5,7 @@ pipeline {
         stage('CheckOut'){
             steps{
                 echo 'Check repository code'
-               
-​               git branch: 'develop', credentialsId: 'unir', url: 'git@github.com:marcosmorenounir/todo-list-aws.git'
-​
+                git branch: 'develop', credentialsId: 'unir', url: 'git@github.com:marcosmorenounir/todo-list-aws.git'
             } 
         }
         
