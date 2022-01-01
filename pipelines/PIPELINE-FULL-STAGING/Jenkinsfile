@@ -1,6 +1,15 @@
 pipeline {
     agent any
     stages {
+    
+        stage('CheckOut'){
+            steps{
+                echo 'Check repository code'
+               
+​               git branch: 'develop', credentialsId: 'unir', url: 'git@github.com:marcosmorenounir/todo-list-aws.git'
+​
+            } 
+        }
         
         stage('SetUp'){
             steps{
@@ -19,7 +28,7 @@ pipeline {
                 always {
                     script {
                         def failed = publishCoverage (failUnhealthy: true, 
-                            globalThresholds: [[thresholdTarget: 'Line', unhealthyThreshold: 70.0]],
+                            globalThresholds: [[thresholdTarget: 'Line', unhealthyThreshold: 80.0]],
                             adapters: [coberturaAdapter(
                                 mergeToOneReport: true, 
                                 path: '**/coverage.xml')])

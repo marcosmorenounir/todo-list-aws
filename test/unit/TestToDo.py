@@ -26,13 +26,15 @@ class TestDatabaseFunctions(unittest.TestCase):
             message="Using or importing.*")
         """Create the mock database and table"""
         self.dynamodb = boto3.resource('dynamodb', region_name='us-east-1')
+       
         self.is_local = 'true'
         self.uuid = "123e4567-e89b-12d3-a456-426614174000"
         self.text = "Aprender DevOps y Cloud en la UNIR"
 
         from src.todoList import create_todo_table
+        print(self.dynamodb)
         self.table = create_todo_table(self.dynamodb)
-        #self.table_local = create_todo_table()
+      
         print ('End: setUp')
 
     def tearDown(self):
@@ -41,24 +43,30 @@ class TestDatabaseFunctions(unittest.TestCase):
         """Delete mock database and table after test is run"""
         self.table.delete()
         print ('Table deleted succesfully')
-        #self.table_local.delete()
+        
         self.dynamodb = None
         print ('End: tearDown')
-
-    def test_table_exists(self):
+  
+    def test_dynamodb_noExists(self):
         print ('---------------------')
-        print ('Start: test_table_exists')
-        #self.assertTrue(self.table)  # check if we got a result
-        #self.assertTrue(self.table_local)  # check if we got a result
-
-        print('Table name:' + self.table.name)
-        tableName = os.environ['DYNAMODB_TABLE'];
-        # check if the table name is 'ToDo'
-        self.assertIn(tableName, self.table.name)
-        #self.assertIn('todoTable', self.table_local.name)
-        print ('End: test_table_exists')
+        print ('Start: test_dynamodb_noExists')
         
-
+        from src.todoList import get_items
+        result = get_items()
+        print ('Response GetItems' + str(result))
+        print ('End: test_dynamodb_noExists')
+ 
+   
+    def test_updateItem_noExists(self):
+        print ('---------------------')
+        print ('Start: test_updateItem_noExists')
+        
+        from src.todoList import update_item
+        result = update_item(None,'Nuevo texto de prueba',False,self.dynamodb)
+        print ('Response update_item' + str(result))
+        print ('End: test_updateItem_noExists')
+    
+    
     def test_put_todo(self):
         print ('---------------------')
         print ('Start: test_put_todo')
@@ -144,7 +152,7 @@ class TestDatabaseFunctions(unittest.TestCase):
 
     def test_update_todo_error(self):
         print ('---------------------')
-        print ('Start: atest_update_todo_error')
+        print ('Start: test_update_todo_error')
         from src.todoList import put_item
         from src.todoList import update_item
         updated_text = "Aprender más cosas que DevOps y Cloud en la UNIR"
