@@ -1,4 +1,5 @@
 import todoList
+import json
 
 
 def translate(event, context):
@@ -12,5 +13,5 @@ def translate(event, context):
         event['pathParameters']['id'], event['pathParameters']['language'])
     return {
         "statusCode": result['status_code'],
-        "body": result['message']
+        "body": json.dumps(result['message'])
     }

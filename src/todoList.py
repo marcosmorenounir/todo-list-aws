@@ -25,15 +25,15 @@ def translate_text(key, lang):
     item = get_item(key)
     try:
         if not item:
-            return {"status_code": 404, "message": f"Id {key} no encontrado"}
+            return {"status_code": 404, "message": {"text": f"Id {key} no encontrado"}}
         translate = boto3.client('translate', region_name=os.environ['REGION'])
         result = translate.translate_text(Text=item['text'],
                                           SourceLanguageCode="auto", TargetLanguageCode=lang)
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {"status_code": 422, "message": e.response['Error']['Message']}
+        return {"status_code": 422, "message": {"text": e.response['Error']['Message']}}
     else:
-        return {"status_code": 200, "message": f"TranslatedText: {result.get('TranslatedText')}"}
+        return {"status_code": 200, "message": {"text": {result.get('TranslatedText')}}}
 
 
 def get_item(key, dynamodb=None):

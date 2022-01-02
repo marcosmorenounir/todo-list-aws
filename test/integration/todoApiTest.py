@@ -101,7 +101,7 @@ class TestApi(unittest.TestCase):
         json_response = response.json()
         jsonbody= json.loads(json_response['body'])
         self.assertEqual(
-            jsonbody, "TranslatedText: Apprenez le sans serveur", "Error en la petición API a {url}"
+            jsonbody['text'], "Apprenez le sans serveur", "Error en la petición API a {url}"
         )
         response = requests.delete(url)
         self.assertEqual(
