@@ -2,6 +2,13 @@ pipeline {
     agent any
     stages {
         
+        stage('CheckOut'){
+            steps{
+                echo 'Check repository code'
+                git branch: 'master', credentialsId: 'unir', url: 'git@github.com:marcosmorenounir/todo-list-aws.git'
+            } 
+        }
+        
         stage('SetUp'){
             steps{
                 echo 'Setup Virtualenv for testing'
