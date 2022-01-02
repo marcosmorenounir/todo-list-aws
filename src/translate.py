@@ -1,24 +1,22 @@
 import json
+import todoList
 
 
 def translate(event, context):
     # create a response
-    #item = todoList.get_item(event['pathParameters']['id'])
-    print(event)
-    """
-    if item:
-        response = {
-            "statusCode": 200,
-            "body": json.dumps(item,
-                               cls=decimalencoder.DecimalEncoder)
-        }
-    else:
-        response = {
+    if not ('id' and 'language') in event['pathParameters']:
+        
+        return {
             "statusCode": 404,
-            "body": ""
+            "body": "Missing id or language parameter"
         }
-    """
+        
+    result = todoList.translateText(event['pathParameters']['id'],event['pathParameters']['language'])
+    
     return {
-            "statusCode": 404,
-            "body": ""
-        }
+            "statusCode": result.status_code,
+            "body": result.message
+    }
+    
+   
+  

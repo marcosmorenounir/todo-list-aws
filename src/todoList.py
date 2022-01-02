@@ -21,6 +21,21 @@ def get_table(dynamodb=None):
     return table
 
 
+def translate_text(key, lang):
+    item = get_item(key)
+    
+    try:
+        
+        translate = boto3.resource('translate')
+        result = translate.translate_text(Text=item['text'], 
+            SourceLanguageCode="auto", TargetLanguageCode=lang)
+        
+    except ClientError as e:
+        print(e.response['Error']['Message'])
+        return {"status_code":422, "message":"Ha ocurrido un error"}
+    else:
+        return {"status_code":200, "message":"Ha ocurrido un error"}
+
 def get_item(key, dynamodb=None):
     table = get_table(dynamodb)
     try:
