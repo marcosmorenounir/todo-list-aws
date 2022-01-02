@@ -15,7 +15,7 @@ def get_table(dynamodb=None):
             boto3.client = functools.partial(boto3.client, endpoint_url=URL)
             boto3.resource = functools.partial(boto3.resource,
                                                endpoint_url=URL)
-        dynamodb = boto3.resource("dynamodb")
+        dynamodb = boto3.resource("dynamodb", region=os.environ['REGION'])
     # fetch todo from the database
     table = dynamodb.Table(os.environ['DYNAMODB_TABLE'])
     return table
@@ -26,7 +26,7 @@ def translate_text(key, lang):
     try:
         if not item:
             return {"status_code": 404, "message": f"Id {key} no encontrado"}
-        translate = boto3.client('translate', region=os.environ['REGION'])
+        translate = boto3.client('translate')
         result = translate.translate_text(Text=item['text'],
                                           SourceLanguageCode="auto", TargetLanguageCode=lang)
     except ClientError as e:
