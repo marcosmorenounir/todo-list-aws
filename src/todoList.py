@@ -23,18 +23,19 @@ def get_table(dynamodb=None):
 
 def translate_text(key, lang):
     item = get_item(key)
-    
+
     try:
-        
+
         translate = boto3.client('translate')
-        result = translate.translate_text(Text=item['text'], 
-            SourceLanguageCode="auto", TargetLanguageCode=lang)
-        
+        result = translate.translate_text(Text=item['text'],
+                                          SourceLanguageCode="auto", TargetLanguageCode=lang)
+
     except ClientError as e:
         print(e.response['Error']['Message'])
-        return {"status_code":422, "message":"Ha ocurrido un error"}
+        return {"status_code": 422, "message": "Ha ocurrido un error"}
     else:
-        return {"status_code":200, "message":f"TranslatedText: {result.get('TranslatedText')}"}
+        return {"status_code": 200, "message": f"TranslatedText: {result.get('TranslatedText')}"}
+
 
 def get_item(key, dynamodb=None):
     table = get_table(dynamodb)
@@ -96,12 +97,12 @@ def update_item(key, text, checked, dynamodb=None):
                 'id': key
             },
             ExpressionAttributeNames={
-              '#todo_text': 'text',
+                '#todo_text': 'text',
             },
             ExpressionAttributeValues={
-              ':text': text,
-              ':checked': checked,
-              ':updatedAt': timestamp,
+                ':text': text,
+                ':checked': checked,
+                ':updatedAt': timestamp,
             },
             UpdateExpression='SET #todo_text = :text, '
                              'checked = :checked, '
