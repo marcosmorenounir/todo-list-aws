@@ -46,7 +46,8 @@ class TestDatabaseFunctions(unittest.TestCase):
         
         self.dynamodb = None
         print ('End: tearDown')
-  
+        
+        
     def test_dynamodb_noExists(self):
         print ('---------------------')
         print ('Start: test_dynamodb_noExists')
@@ -55,7 +56,22 @@ class TestDatabaseFunctions(unittest.TestCase):
         result = get_items()
         print ('Response GetItems' + str(result))
         print ('End: test_dynamodb_noExists')
- 
+        
+        
+    def test_translate(self):
+        print ('---------------------')
+        print ('Start: test_translate')
+        
+        from src.todoList import translate_text
+        from src.todoList import put_item
+        
+        result = translate_text('a','en')
+        print (f"Response Error status {result['status_code']} message: {result['message']}")
+        responsePut = put_item(self.text, self.dynamodb)
+        idItem = json.loads(responsePut['body'])['id']
+        result = translate_text(idItem,'ynh')
+        print (f"Response Error 2 status {result['status_code']} message: {result['message']}")
+        print ('End: test_translate')
    
     def test_updateItem_noExists(self):
         print ('---------------------')
