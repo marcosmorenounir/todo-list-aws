@@ -26,7 +26,7 @@ def translate_text(key, lang):
     try:
         if not item:
             return {"status_code": 404, "message": f"Id {key} no encontrado"}
-        translate = boto3.client('translate')
+        translate = boto3.client('translate', region=os.environ['REGION'])
         result = translate.translate_text(Text=item['text'],
                                           SourceLanguageCode="auto", TargetLanguageCode=lang)
     except ClientError as e:
