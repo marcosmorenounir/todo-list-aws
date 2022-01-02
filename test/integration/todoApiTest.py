@@ -101,6 +101,7 @@ class TestApi(unittest.TestCase):
         self.assertEqual(
             response.text, "Apprenez le sans serveur", "Error en la petición API a {url}"
         )
+        url = f"{url}/{ID_TODO}"
         response = requests.delete(url)
         self.assertEqual(
             response.status_code, 200, "Error en la petición API a {url}"
