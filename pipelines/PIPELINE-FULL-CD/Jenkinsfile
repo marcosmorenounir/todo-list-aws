@@ -21,7 +21,6 @@ pipeline {
                 sshagent(['unir']) {
                     sh "git push origin master"
                 }
-
             }
         }
         stage('Production'){
