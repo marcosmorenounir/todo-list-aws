@@ -11,7 +11,7 @@ def translate(event, context):
             "body": "Missing id or language parameter"
         }
         
-    result = todoList.translateText(event['pathParameters']['id'],event['pathParameters']['language'])
+    result = todoList.translate_text(event['pathParameters']['id'],event['pathParameters']['language'])
     
     return {
             "statusCode": result.status_code,
