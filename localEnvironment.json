@@ -1,4 +1,9 @@
 {
+  
+  "TranslateTodoFunction": {
+    "ENDPOINT_OVERRIDE": "http://dynamodb:8000",
+    "DYNAMODB_TABLE": "local-TodosDynamoDbTable"
+  }
   "CreateTodoFunction": {
     "ENDPOINT_OVERRIDE": "http://dynamodb:8000",
     "DYNAMODB_TABLE": "local-TodosDynamoDbTable"
