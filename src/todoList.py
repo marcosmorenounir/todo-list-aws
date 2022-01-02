@@ -42,7 +42,7 @@ def get_items(dynamodb=None):
     table = get_table(dynamodb)
     # fetch todo from the database
     result = table.scan()
-    return result['Items']
+    return result['Items'] if 'Items' in result else None
 
 
 def put_item(text, dynamodb=None):
@@ -139,7 +139,6 @@ def create_todo_table(dynamodb):
             'WriteCapacityUnits': 1
         }
     )
-
     # Wait until the table exists.
     table.meta.client.get_waiter('table_exists').wait(TableName=tableName)
     if (table.table_status != 'ACTIVE'):
